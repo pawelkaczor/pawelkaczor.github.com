@@ -1,0 +1,31 @@
+.s1, .s2, .sx, .mi {
+  color: #91BB9E;
+}
+
+.nb {
+  color: #FB9A4B; font-style: italic;
+}
+
+.k, .o {
+  color: #96DD3B;
+}
+
+.ss {
+  color: rgb(255, 207, 135);
+}
+
+.vi {
+  color: #FB9A4B;
+}
+
+.c, .c1 {
+  color: #245032;
+}
+
+.no {
+  color: #9DF39F;
+}
+
+.kp, .ss {
+  color: #497958;
+}
