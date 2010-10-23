@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Pawel Kaczor - blog"
-description: "Blog Pawla Kaczora, o programowaniu w aplikacji biznesowych."
+description: "Blog Pawła Kaczora, o programowaniu aplikacji biznesowych."
 ---
 <div class="related">
 <h2 style="padding-top:1em;" class="green">Wpisy:</h2>
@@ -30,17 +30,12 @@ description: "Blog Pawla Kaczora, o programowaniu w aplikacji biznesowych."
 {% endfor %}
 
 <div class="related">
-  <div class="onleft">
-  <a id="atom_link" href="/atom.xml">
-  <img alt="subscribe" src="/images/atom.jpg"/>
-  </a>
-  <br />
-  <a href="http://validator.w3.org/check?uri=referer">
-    <img src="http://www.w3.org/Icons/valid-xhtml10-blue"
-      alt="Valid XHTML 1.0 Strict" height="31" width="88" />
-  </a>
-  </div>
   <div id="rest">
+	<div>
+		<div>
+		    <h2><a href="http://pkaczor.blogspot.com" id="blog-link" style="text-align:left;">read my blog!</a> <img alt="blog" src="http://img1.blogblog.com/img/navbar/icons_orange.png"/></h2>
+		</div>
+	</div>
     <div class="twitter">
       <div id="twitter_div">
         <h2 class="sidebar-title">ćwierkanie! <img alt="twitter" src="/images/twitter_48.png"/></h2>

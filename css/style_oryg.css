@@ -1,0 +1,364 @@
+body {
+	margin: 0;
+	padding: 0;
+	font: 18px  "ff-dagny-web-pro-1","ff-dagny-web-pro-2",Palatino, georgia, "times new roman", serif;
+	line-height: 1.7em;
+	color: black;
+	background: white;
+}
+
+.ruby:hover {
+  -webkit-transform: rotate(360deg);
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transform: rotate(360deg);
+  -moz-transition: all 1s ease-in-out;
+}
+
+#container {
+	width: 42em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.beta {
+  color:gray;
+  font-size:17px;
+  font-style:italic;
+  margin-left:-44px;
+  vertical-align:top;
+}
+.menubar {
+  color: #aaa;
+  line-height: 1.3em;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.menubar a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.menubar a:hover {
+  color: #7CA300;
+}
+
+#header {
+  padding-top: 0.3em;
+}
+
+#footer {
+  margin-top: 3em;
+  padding-bottom: 0.3em;
+}
+
+.name {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.8em;
+  font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2",Palatino, georgia, "times new roman", serif;
+  font-weight: 100;
+  line-height: 1.2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.3em;
+  margin-top: 0;
+  padding-top: 1em;
+}
+
+h3 {
+  font-size: 1.3em;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: normal;
+	border-bottom: 1px solid #ddd;
+}
+
+h1, .post, .link-post {
+  padding-bottom: 8px;
+	margin-bottom: 48px;
+}
+
+
+.link-post h2 {
+  font-size: 1.4em;
+}
+
+code {
+  font-family: Monaco, monospace;
+}
+
+.highlight {
+  background: yellow;
+  margin-top: -0.3em;
+}
+
+.osx-shortcut {
+	background: #f0f0f0;
+	color : #7CA300;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  border: 1px solid #e0e0e0;
+  -moz-border-radius: 0.2em;
+  -webkit-border-radius: 0.2em;
+}
+
+.meta {
+  font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2",Palatino, georgia, "times new roman", serif;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #999;
+  border-top: 1px solid #ddd;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  margin-top: -0.6em;
+}
+
+.meta a, .content a, .related a {
+  color: #7CA300;
+  text-decoration: none;
+  border-bottom: 1px dotted #d3dfee;
+}
+
+.meta a {
+  font-weight: normal;
+
+}
+
+.meta a:hover, .content a:hover, .related a:hover {
+  border-bottom: 1px solid #7CA300;
+}
+
+.title a {
+  color: #7CA300;
+  text-decoration: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: white;
+}
+
+.title a:hover {
+  border: none;
+}
+
+.andrzejsliwa {
+  color:#7CA300;
+  text-shadow:2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.video {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+pre {
+  font: 0.7em Monaco, monospace;
+  line-height: 1.4em;
+  display: block;
+  color: white;
+  background: #0B2F20;
+  -moz-border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
+  padding: 0.6em;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.related {
+  color: #7CA300;
+  font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2",Palatino, georgia, "times new roman", serif;
+  font-size: 0.9em;
+  line-height: 1.7em;
+}
+
+.related h3 {
+  font-size: 1.2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.related p {
+  margin-top: 0.4em;
+}
+
+.content p {
+  margin-bottom: 1.3em;
+}
+
+.onleft {
+  float : left;
+}
+
+#rest {
+  float : right;
+  width : 600px;
+}
+
+#atom_link img {
+  border:medium none;
+}
+
+
+/* @group FancyFirst */
+ .content h2 + p:first-letter {
+ font-size: 48px;
+ padding: 0 0.15em 0 0;
+ margin: 0.05em 0 -0.15em 0;
+ line-height: 1em;
+ float: left;
+}
+
+.content h2 + p:first-line {
+ font-variant: small-caps;
+ font-size: larger;
+}
+/* @end */
+
+.green {
+  color: #7CA300;
+}
+
+strong {
+  color: #7CA300;
+}
+
+.foto {
+  padding:2px;
+  flow: left;
+  border:1px solid #7CA300;
+}
+
+img {
+  border: 0px;
+}
+
+.post img.example {
+  width: 43em;
+}
+
+
+
+#loopedSlider {
+  margin:0 auto;
+  padding:40px 0;
+  width:740px;
+}
+
+#loopedSlider .nav-buttons {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  position:relative;
+}
+
+ul, ol {
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  padding:10px 0;
+}
+
+.related ul, ol {
+  list-style-type: disc;
+  margin: 20px;
+  padding:10px 0;
+}
+
+#loopedSlider li#p {
+  left:0;
+  position:absolute;
+  top:300px;
+}
+
+#loopedSlider li#p1 {
+  left:0;
+  position:absolute;
+  top:800px;
+}
+
+li {
+  margin:0;
+  padding:0;
+}
+
+a {
+  color:#2882C1;
+}
+
+#portfolio a {
+  border:medium none;
+  text-decoration:none;
+}
+
+#loopedSlider li#n {
+  position:absolute;
+  right:0;
+  top:300px;
+}
+
+#loopedSlider li#n1 {
+  position:absolute;
+  right:0;
+  top:800px;
+}
+
+a img {
+  border:medium none;
+}
+
+.container {
+  height:320px;
+  margin-left:50px;
+  overflow:hidden;
+  position:relative;
+  width:640px;
+}
+
+.slides {
+  left:0;
+  position:absolute;
+  top:0;
+}
+
+.slides div.slide {
+  display:none;
+  position:absolute;
+  top:0;
+  width:640px;
+}
+
+#portfolio h2 {
+  color:#7CA300;
+  font-size:40px;
+  font-weight:normal;
+  letter-spacing:-1px;
+  line-height:40px;
+  padding:0 0 10px;
+  font-family:Georgia;
+  text-shadow:2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#portfolio p {
+  color:#333333;
+  font-size:14px;
+  line-height:20px;
+}
+
+#portfolio .alignright {
+  float:top;
+  margin:5px 0 8px 20px;
+}
+
+.highlight + .highlight { display:none; } /* dirty fix for jekyll highlight bug */
