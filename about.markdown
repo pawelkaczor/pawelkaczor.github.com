@@ -19,7 +19,7 @@ email: <a href="mailto:n_e_w_i_c_o_m@googlemail.com"><strong>n_e_w_i_c_o_m@googl
 </p>
 
 
-<h2 style="padding-top:2em;" class="green">O pawelkaczor.com</h2>
+<h2 style="padding-top:2em;" class="green">O newicom.pl</h2>
 Ta strona została zbudowana z użyciem [jekyll](http://github.com/mojombo/jekyll/tree/master),  
 'blog-aware, static site generator', w pełni wykorzystując możliwości [![GitHub Pages](images/logo_pages.png)](http://pages.github.com/)
 
