@@ -48,7 +48,7 @@ The recent move towards the **SOA 2.0** / Event-driven SOA / "SOA done Right" / 
 
 	}
 ```
-Source: [OrderProcessManager.scala](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/master/headquarters/write-back/src/main/scala/ecommerce/headquarters/processes/OrderProcessManager.scala)
+Source: [OrderProcessManager.scala](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20161103/headquarters/write-back/src/main/scala/ecommerce/headquarters/processes/OrderProcessManager.scala)
 
 An order is represented as a process that is triggered by the `ReservationConfirmed` event published by the `Reservation Office`. As soon as the order is created, the `CreateInvoice` command is issued to the `Invoicing Office` and the status of the order is changed to `WaitingForPayment`. If the payment succeeds (the `OrderBilled` event is received from the `Invoicing` office within 3 minutes) the `CreateShipment` command is issued to the `Shipping Office` and the status of the order is changed to `DeliveryInProgress`. But, if the scheduled timeout message `PaymentExpired` is received while the order is still not billed, the `CancelInvoice`commands is issued to the `Invoicing Office` and eventually the process ends with a `Failed` status. 
 
@@ -67,7 +67,7 @@ The execution of the logic of a particular business process instance is handled 
 	
 	office[OrderProcessManager] // start Ordering Coordination Office
 ```
-Source: [HeadquartersApp.scala](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/master/headquarters/write-back/src/main/scala/ecommerce/headquarters/app/HeadquartersApp.scala)
+Source: [HeadquartersApp.scala](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20161103/headquarters/write-back/src/main/scala/ecommerce/headquarters/app/HeadquartersApp.scala)
 
 #### Let the events flow
 
@@ -96,7 +96,7 @@ fromStreams(['$ce-Reservation', '$ce-Invoice', 'currentDeadlines-global']).
     });
 ```
 
-Source: [order-process.js](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/master/headquarters/write-back/src/main/resources/projections/order-process.js)
+Source: [order-process.js](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20161103/headquarters/write-back/src/main/resources/projections/order-process.js)
 
 Now, the events from the `order` journal need to be assigned the `CorrelationID` and directed to the responsible Coordination Office. What is important and challenging though, is to ensure that the events get delivered in a reliable manner. 
 
@@ -116,19 +116,19 @@ In our scenario, we already have the event-sourced Process Manager on the receiv
 
 #### Receptor
 
-The Receptor gets created by the [factory method](https://github.com/pawelkaczor/akka-ddd/blob/master/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/ReceptorSupport.scala#L14) based on the provided [configuration object](https://github.com/pawelkaczor/akka-ddd/blob/225d19205077e1cde7ebc0b24764b700888aea41/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L17). The configuration can be built using the simple [Receptor DSL](https://github.com/pawelkaczor/akka-ddd/blob/225d19205077e1cde7ebc0b24764b700888aea41/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L26). 
+The Receptor gets created by the [factory method](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/ReceptorSupport.scala#L14) based on the provided [configuration object](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L17). The configuration can be built using the simple [Receptor DSL](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L26). 
 
-The [Receptor](https://github.com/pawelkaczor/akka-ddd/blob/master/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L21) actor is a **durable subscriber**. During the initialization, it is [subscribing](https://github.com/pawelkaczor/akka-ddd/blob/master/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L45) by itself to the event journal of the business entity that was provided as the `stimuliSource` in the configuration object. After the event has been received and stored in the receptor journal, the transformation function gets called and the result gets sent to the configured receiver. If the receiver address is to be obtained from an event, that gets propagated, then the `receiverResolver` function should be provided in the configuration. 
+The [Receptor](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L21) actor is a **durable subscriber**. During the initialization, it is [subscribing](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L45) by itself to the event journal of the business entity that was provided as the `stimuliSource` in the configuration object. After the event has been received and stored in the receptor journal, the transformation function gets called and the result gets sent to the configured receiver. If the receiver address is to be obtained from an event, that gets propagated, then the `receiverResolver` function should be provided in the configuration. 
 
 One might question the fact that the same events get written twice into the event store (first time to the office journal, second time to the receptor journal). I would like to clarify, that in fact this does not happen. The receptor is by default configured to use an **in-memory journal** and the only messages that get persisted are the snapshots of the receptor state. The snapshots get written to the snapshot store on a regular basis (every `n` events, where `n` is configurable) and contain the messages awaiting the delivery receipt.  
 
 #### Coordination Office Receptor
 
-Having learned how to build a receptor, it should be easy to understand the behavior of the Coordination Office receptor by examining its [configuration](https://github.com/pawelkaczor/akka-ddd/blob/master/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/saga/CoordinationOffice.scala#L14). As we can see, the receptor reacts to the events, coming from the aggregated process journal, adds the `CorrelationID` meta-attribute to the event message and propagates the event message to the Coordination Office representative actor. The name of the aggregated process journal and the `CorrelationID` resolver function get retrieved from the [ProcessConfig](https://github.com/pawelkaczor/akka-ddd/blob/225d19205077e1cde7ebc0b24764b700888aea41/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/saga/ProcessConfig.scala) object — an implicit parameter of the `office` factory method. 
+Having learned how to build a receptor, it should be easy to understand the behavior of the Coordination Office receptor by examining its [configuration](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/saga/CoordinationOffice.scala#L14). As we can see, the receptor reacts to the events, coming from the aggregated process journal, adds the `CorrelationID` meta-attribute to the event message and propagates the event message to the Coordination Office representative actor. The name of the aggregated process journal and the `CorrelationID` resolver function get retrieved from the [ProcessConfig](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/saga/ProcessConfig.scala) object — an implicit parameter of the `office` factory method. 
 
 To summarize, the Coordination Office receptor gets automatically created by the Akka-DDD framework, based on the configuration of the business process. 
 
-So, let's take a look at the [OrderProcessConfiguration](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/master/headquarters/write-back/src/main/scala/ecommerce/headquarters/processes/OrderProcessManager.scala#L31):
+So, let's take a look at the [OrderProcessConfiguration](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20161103/headquarters/write-back/src/main/scala/ecommerce/headquarters/processes/OrderProcessManager.scala#L31):
 
 ```scala
   implicit object OrderProcessConfig extends ProcessConfig[OrderProcessManager]("order", department) {
