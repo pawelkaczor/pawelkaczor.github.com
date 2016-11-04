@@ -116,9 +116,9 @@ In our scenario, we already have the event-sourced Process Manager on the receiv
 
 #### Receptor
 
-The Receptor gets created by the [factory method](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/ReceptorSupport.scala#L14) based on the provided [configuration object](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L17). The configuration can be built using the simple [Receptor DSL](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L26). 
+A Receptor gets created by the [factory method](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/ReceptorSupport.scala#L14) based on the provided [configuration object](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L17). The configuration can be built using the simple [Receptor DSL](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-messaging/src/main/scala/pl/newicom/dddd/coordination/ReceptorBuilder.scala#L26). 
 
-The [Receptor](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L21) actor is a **durable subscriber**. During the initialization, it is [subscribing](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L45) by itself to the event journal of the business entity that was provided as the `stimuliSource` in the configuration object. After the event has been received and stored in the receptor journal, the transformation function gets called and the result gets sent to the configured receiver. If the receiver address is to be obtained from an event, that gets propagated, then the `receiverResolver` function should be provided in the configuration. 
+A [Receptor](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L21) actor is a **durable subscriber**. During the initialization, it is [subscribing](https://github.com/pawelkaczor/akka-ddd/blob/v1.3.1/akka-ddd-core/src/main/scala/pl/newicom/dddd/process/Receptor.scala#L45) (by itself) to the event journal of the business entity that was provided as the `stimuliSource` in the configuration object. After the event has been received and stored in the receptor journal, the transformation function gets called and the result gets sent to the configured receiver. If the receiver address is to be obtained from an event, that gets propagated, then the `receiverResolver` function should be provided in the configuration. 
 
 One might question the fact that the same events get written twice into the event store (first time to the office journal, second time to the receptor journal). I would like to clarify, that in fact this does not happen. The receptor is by default configured to use an **in-memory journal** and the only messages that get persisted are the snapshots of the receptor state. The snapshots get written to the snapshot store on a regular basis (every `n` events, where `n` is configurable) and contain the messages awaiting the delivery receipt.  
 
@@ -145,7 +145,7 @@ The aggregated process journal is given the name: `order`. The `correlationIdRes
 
 #### Message flow - the complete picture 
 
-After the initial event has been received and processed by the Process Manager, the business process instance gets started. The business process will continue, driven by the events, that will be emitted after the commands, issued by the Process Manager, get processed in the responsible Command Offices.
+After the initial event has been received and processed by the Process Manager, the business process instance gets started. The business process will continue, driven by the events. The events will be emitted as soon as the commands, issued by the Process Manager, get processed in the responsible Command Offices.
  
 The following diagram visualizes the flow of the commands and events within the system that occurs when the business process is running.   
 
@@ -153,17 +153,19 @@ The following diagram visualizes the flow of the commands and events within the 
 
 #### Business process journal
 
-Before reacting upon an event, the Process Manager writes the event to its journal. The journal of a Process Manager is de facto a journal of a business process instance - it keeps the events related to particular business process instance in order they were processed by the Process Manager.
+Before reacting to an event, the Process Manager writes the event to its journal. The journal of a Process Manager is de facto a journal of a business process instance - it keeps the events related to particular business process instance in order they were processed by the Process Manager.
 
-#### Ordering Process - alternative implementation (Event Choreography) 
+#### Ordering Process - an alternative implementation (Event Choreography) 
 
-Instead of giving the responsibility for the business process execution to the single, external business entity (the Ordering Process is managed by a Process Manager, operating in the `Headquarters` subsystem), we could let the process emerge by allowing more direct communication between the offices. For example, to send the `CreateShipment` command to the `Shipping Office` in reaction to the `OrderBilled` event comming from the `Invoicing Office` we could register a simple Receptor in the `Shipping` subsystem. In the same way, we could implement other interactions required by the Ordering Process and thus make the `Headquarters` subsystem obsolete. The overall event flow could be modelled as presented on the following diagram:
+Instead of giving the responsibility for the business process execution to the single, external business entity (the Ordering Process is managed by a Process Manager, operating in the `Headquarters` subsystem), we could let the process emerge by allowing more direct communication between the offices. For example, to send the `CreateShipment` command to the `Shipping Office` in reaction to the `OrderBilled` event coming from the `Invoicing Office` we could register a simple Receptor in the `Shipping` subsystem. In the same way, we could implement other interactions required by the Ordering Process and thus make the `Headquarters` subsystem obsolete. 
+ 
+The overall event flow could be modeled as presented on the following diagram:
 
 ![](https://raw.githubusercontent.com/pawelkaczor/ddd-leaven-akka-v2/master/project/diagrams/OrderingSystem.png)
 
-We can find this alternative approach to the implementation of the Ordering Process in the previous versions of the [akka-leaven-ddd-v2](https://github.com/pawelkaczor/ddd-leaven-akka-v2/tree/20160731) project. The `Headquarters` subsystem was not existing at that time. In the `Shipping` subsystem, you can find the implementation of the [Payment Receptor](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20160731/shipping/write-back/src/main/scala/ecommerce/shipping/PaymentReceptor.scala), that I described above.  
+We can find this alternative approach to the implementation of the Ordering Process in the previous [version](https://github.com/pawelkaczor/ddd-leaven-akka-v2/tree/20160731) of the ddd-leaven-akka-v2 project. The `Headquarters` subsystem did not exist back then. In the `Shipping` subsystem, you can find the implementation of the [Payment Receptor](https://github.com/pawelkaczor/ddd-leaven-akka-v2/blob/20160731/shipping/write-back/src/main/scala/ecommerce/shipping/PaymentReceptor.scala), that I described above.  
 
 
 #### Summary
 
-To be written...
+Once we start modeling the interactions that shape our business domain, using the language of commands and events, we are on a good way towards a model of the system that is simple to understand by the business people and simple to express in the code. Although, we could implement the event-centric model on basis of the monolith architecture, we should not be scared of the distributed architecture, especially if we want the system to be scalable and fault-tolerant. As we saw, the coordination of activities between event-sourced business entities can efficiently and reliably be performed in the distributed environment. 
