@@ -8,7 +8,7 @@ https://github.com/joeyh/myrepos
 
 **mr** - a tool to manage all your version control repos
 
-**mr** is configured by .mrconfig files, which list the repositories.
+**mr** is configured by .mrconfig file, which list the repositories.
 
 **mr** supports vcsh repositories!
 
