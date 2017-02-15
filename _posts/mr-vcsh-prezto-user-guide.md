@@ -16,7 +16,7 @@ https://github.com/joeyh/myrepos
 
 ```
 [$HOME/.config/vcsh/repo.d/documents.git]
-checkout = vcsh clone https://pkaczor@bitbucket.org/pkaczor/documents.git documents
+checkout = vcsh clone $DOCUMENTS_GIT_REPO documents
 vcsh_status = vcsh documents status ~/Documents
 grep = ack-grep "$@"
 ```
@@ -77,6 +77,7 @@ vcsh-modules is intended for improving support of **git submodules** in vcsh.
 # Prezto
 
 https://github.com/sorin-ionescu/prezto
+
 My fork: https://github.com/pawelkaczor/prezto
 
 Prezto is a configuration framework for Zsh.
