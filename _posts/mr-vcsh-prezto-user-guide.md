@@ -23,6 +23,7 @@ grep = ack-grep "$@"
 
 ---
  * **Note**
+
     **mr grep** will not work for vcsh repository unless the **grep** command is defined (as shown above).
     
     Make sure **ack-grep** is installed. 
@@ -55,6 +56,7 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 
 ---
 * **Note**
+
    Do not run **vcsh write-gitignore** for a repo if you expect new files to arrive often in that repo. 
 
    If you do not generate .gitignore file for a repo, make sure you define **vcsh_status** command (see mr section above). Otherwise **mr st** and **vcsh status** commands will report many untracked files (because different git repos share the same ($HOME) working directory) - if I remember correctly. 
@@ -81,6 +83,7 @@ The Prezto git repository should be cloned to **~/.zprezto** directory. It conta
 
 ---
  * **Note**
+
    To update the Prezto modules run: ```git submodule update --init --recursive``` from ~/.zprezto directory.
 
    You should fork the Prezto and clone from the fork.
@@ -91,6 +94,3 @@ The Prezto git repository should be cloned to **~/.zprezto** directory. It conta
 
 ---
   
-
-
-
