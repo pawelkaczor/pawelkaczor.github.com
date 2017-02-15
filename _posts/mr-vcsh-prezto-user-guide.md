@@ -31,6 +31,7 @@ grep = ack-grep "$@"
     Leave empty line at the end of the repo configuration file! This is necessary because the repo configs are **included** from the ~/.mrconfig file.
 
     Define **vcsh_status** only if you do not generate .gitignore file (see vcsh section for more details).
+
 ---
 
 
@@ -64,6 +65,7 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
    Once you run **vcsh write-gitignore** for a repo, newly added files will not be tracked automatically! You will have to add them manually to the repo!. The git add command can be used to add ignored files with the -f (force) option.
 
    After adding a file to the repo manually, you should rerun **vcsh write-gitignore** command.
+
 ---
 
 #### vcsh-modules
