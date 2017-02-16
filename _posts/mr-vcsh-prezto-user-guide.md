@@ -66,7 +66,7 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 
    After adding a file to the repo manually, you should rerun **vcsh write-gitignore** command.
 
-   You need to decide in which git repo you want to store the generated *~/.gitignore.d/<repo_name>* file. You can choose the repo the file was generated for. Or maybe you want to store all *~/.gitignore.d/* files in a separate repo?
+   You need to decide in which git repo you want to store the generated *~/.gitignore.d/repo_name* file. You can choose the repo the file was generated for. Or maybe you want to store all *~/.gitignore.d/* files in a separate repo?
 
    **TODO**: automate the workflow related to the maintenance of *~/.gitignore.d/* files.     
 
@@ -78,7 +78,7 @@ https://github.com/lierdakil/vcsh-modules/wiki
 
 vcsh-modules is intended for improving support of **git submodules** in vcsh.
 
-To define git submodules in a repository, create a configuration file  *.gitmodules.d/<repo_name>* in the repository. The configuration file should specify git submodules. See example below: 
+To define git submodules in a repository, create a configuration file  *.gitmodules.d/repo_name* in the repository. The configuration file should specify git submodules. See example below: 
 
 ```
 [submodule ".config/awesome/vicious"]
