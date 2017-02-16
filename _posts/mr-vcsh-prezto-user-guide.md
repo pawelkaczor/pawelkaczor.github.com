@@ -69,6 +69,7 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
    You need to decide in which git repo you want to store the generated *~/.gitignore.d/<repo_name>* file. You can choose the repo the file was generated for. Or maybe you want to store all *~/.gitignore.d/* files in a separate repo?
 
    **TODO**: automate the workflow related to the maintenance of *~/.gitignore.d/* files.     
+
 ---
 
 #### vcsh-modules
