@@ -12,7 +12,7 @@ https://github.com/joeyh/myrepos
 
 **mr** supports vcsh repositories!
 
-#### vcsh repository configuration file - example
+### vcsh repository configuration file - example
 
 ```
 [$HOME/.config/vcsh/repo.d/documents.git]
@@ -35,7 +35,7 @@ grep = ack-grep "$@"
 ---
 
 
-#### Less known mr commands
+### Less known mr commands
 
 - **mr ci** - Commits changes to each repository. (By default, changes are pushed to the remote repository too, when using distributed systems like git) The optional -m parameter allows specifying a commit message.
 
@@ -51,7 +51,7 @@ vcsh - Version Control System for $HOME - multiple Git repositories in $HOME
 
 vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 
-#### Ignored files
+### Ignored files
 
 >> vcsh can generate per-repo .gitignore files (in .gitignore.d/<repo_name>) by running vcsh write-gitignore <repo_name>. That will cause each git repo to ignore anything that is not specifically tracked in itself. This covers not only the git status use case but a few others as well.
 
@@ -72,7 +72,7 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 
 ---
 
-#### vcsh-modules
+### vcsh-modules
 
 https://github.com/lierdakil/vcsh-modules/wiki
 
@@ -89,7 +89,7 @@ To define git submodules in a repository, create a configuration file  *.gitmodu
   url = https://github.com/dodo/uzful.git
 ```  
 
-#### Less known vcsh commands
+### Less known vcsh commands
 
 * list-tracked - List all files tracked by vcsh
 * which <substring> - Find substring in name of any tracked file
