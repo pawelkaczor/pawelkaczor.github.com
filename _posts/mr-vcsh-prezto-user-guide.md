@@ -35,7 +35,7 @@ grep = ack-grep "$@"
 ---
 
 
-#### Commands
+#### Less known mr commands
 
 - **mr ci** - Commits changes to each repository. (By default, changes are pushed to the remote repository too, when using distributed systems like git) The optional -m parameter allows specifying a commit message.
 
@@ -66,6 +66,9 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 
    After adding a file to the repo manually, you should rerun **vcsh write-gitignore** command.
 
+   You need to decide in which git repo you want to store the generated *~/.gitignore.d/<repo_name>* file. You can choose the repo the file was generated for. Or maybe you want to store all *~/.gitignore.d/* files in a separate repo?
+
+   **TODO**: automate the workflow related to the maintenance of *~/.gitignore.d/* files.     
 ---
 
 #### vcsh-modules
@@ -73,6 +76,22 @@ vcsh repositories are by default located under **$XDG_CONFIG_HOME/vcsh/repo.d**
 https://github.com/lierdakil/vcsh-modules/wiki
 
 vcsh-modules is intended for improving support of **git submodules** in vcsh.
+
+To define git submodules in a repository, create a configuration file  *.gitmodules.d/<repo_name>* in the repository. The configuration file should specify git submodules. See example below: 
+
+```
+[submodule ".config/awesome/vicious"]
+  path = .config/awesome/vicious
+  url = http://git.sysphere.org/vicious
+[submodule ".config/awesome/uzful"]
+  path = .config/awesome/uzful
+  url = https://github.com/dodo/uzful.git
+```  
+
+#### Less known vcsh commands
+
+* list-tracked - List all files tracked by vcsh
+* which <substring> - Find substring in name of any tracked file
 
 # Prezto
 
