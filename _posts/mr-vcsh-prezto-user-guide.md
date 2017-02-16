@@ -18,15 +18,13 @@ https://github.com/joeyh/myrepos
 [$HOME/.config/vcsh/repo.d/documents.git]
 checkout = vcsh clone $DOCUMENTS_GIT_REPO documents
 vcsh_status = vcsh documents status ~/Documents
-grep = ack-grep "$@"
+grep = cd "$HOME"; vcsh list-tracked-by documents | xargs -d '\n' ack-grep "$@"
 ```
 
 ---
  * **Note**
 
-    **mr grep** will not work for vcsh repository unless the **grep** command is defined (as shown above).
-    
-    Make sure **ack-grep** is installed. 
+    **mr grep** will not work for vcsh repository unless the **grep** command is defined (as shown above). Make sure **ack-grep** is installed. 
 
     Leave empty line at the end of the repo configuration file! This is necessary because the repo configs are **included** from the ~/.mrconfig file.
 
